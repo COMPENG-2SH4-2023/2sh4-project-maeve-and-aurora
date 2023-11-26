@@ -25,9 +25,12 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
+        int *GameMechsD; 
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
+        ~GameMechs(); 
         
         bool getExitFlagStatus();
         void setExitTrue();
@@ -38,6 +41,8 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
+
+        
       
 
 };
