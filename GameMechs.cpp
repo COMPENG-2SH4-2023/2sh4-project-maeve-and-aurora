@@ -21,11 +21,13 @@ GameMechs::~GameMechs()
 
 bool GameMechs::getExitFlagStatus()
 {
+    return(exitFlag); 
 
 }
 
 char GameMechs::getInput()
 {
+    return(input); 
 
 }
 
@@ -42,6 +44,7 @@ int GameMechs::getBoardSizeY()
 
 void GameMechs::setExitTrue()
 {
+    exitFlag = true; 
 
 }
 

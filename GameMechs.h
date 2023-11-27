@@ -20,7 +20,7 @@ class GameMechs
 
     private:
         char input;
-        bool exitFlag;
+        bool exitFlag= false;
         
         int boardSizeX;
         int boardSizeY;

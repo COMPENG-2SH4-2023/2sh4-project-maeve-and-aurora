@@ -1,7 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-#include "GameMechs.h"; //This wasnt included in the original skeleton code but I don't see 
+#include "GameMechs.h" //This wasnt included in the original skeleton code but I don't see 
                         //any way this will work without it? We need a pointer to game mechs
                         //and I dont think thats possible without including this library  
 
@@ -30,7 +30,7 @@ int main(void)
 
     Initialize();
 
-    while(GameMechsPtr -> exitFlag == false)  
+    while(GameMechsPtr -> getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -47,29 +47,32 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    GameMechsPtr = new; 
+    GameMechsPtr = new GameMechs(); 
     GameMechs(); 
 
-    GameMechsPtr -> exitFlag = false;
-    cout << "Hej"; 
+   //GameMechsPtr -> getExitFlagStatus() 
+
+    
 }
 
 void GetInput(void)
 {
+    cout << "hi" << endl; 
    if (MacUILib_hasChar())
     {
-        GameMechsPtr -> input= MacUILib_getChar(); 
+        GameMechsPtr -> setInput(MacUILib_getChar()); 
     }
 }
 
 void RunLogic(void)
 {
-    if(GameMechsPtr -> input != 0)
+    cout << GameMechsPtr -> getInput(); 
+    if(GameMechsPtr -> getInput() != 0)
     {
-        switch(GameMechsPtr -> input)
+        switch(GameMechsPtr -> getInput())
         {
             case 27:
-                GameMechsPtr -> input = 1; 
+                GameMechsPtr -> setExitTrue(); 
                 break; 
         }
     }
