@@ -26,6 +26,9 @@ class GameMechs
         int boardSizeX =15;
         int boardSizeY =30;
 
+        int x = 14; 
+        int y =5; 
+
         int *GameMechsD; 
 
     public:
@@ -35,6 +38,7 @@ class GameMechs
         
         bool getExitFlagStatus();
         void setExitTrue();
+        void setMessage(int pos, char input); 
 
         char getInput();
         void setInput(char this_input);

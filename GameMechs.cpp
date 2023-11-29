@@ -7,7 +7,8 @@ GameMechs::GameMechs()
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
-    
+    int i; 
+
 
 }
 
@@ -51,14 +52,12 @@ void GameMechs::setExitTrue()
 
 int GameMechs::getX()
 {
-    int x=5; 
     return(x); 
 
 }
 
 int GameMechs::getY()
 {
-    int y=5;
     return(y);  
 
 }
@@ -77,6 +76,11 @@ void GameMechs::setInput(char this_input)
 void GameMechs::clearInput()
 {
     input = 0; 
+}
+
+void GameMechs::setMessage(int pos, char input)
+{
+    message[pos] = input; 
 }
 
 

@@ -9,6 +9,7 @@
 using namespace std;
 
 #define DELAY_CONST 100000
+//char message1[31] = "#                            #"; //For debuging, can be deleted
 
 //Global Varible Declaration
 //bool exitFlag; 
@@ -67,8 +68,8 @@ void GetInput(void)
 void RunLogic(void)
 {
     char input = GameMechsPtr -> getInput(); 
-    int x = 5; 
-    int y = 5; 
+    int x = GameMechsPtr -> getX(); 
+    int y = GameMechsPtr -> getY(); 
 
     
     
@@ -88,6 +89,7 @@ void RunLogic(void)
     }
 
     
+    
 }
 
 void DrawScreen(void)
@@ -97,16 +99,31 @@ void DrawScreen(void)
     int j;  
     int x = GameMechsPtr ->getX(); 
     int y = GameMechsPtr -> getY(); 
+   GameMechs a = GameMechs(x, y); 
 
-    printf("####################\n"); 
+    for (i = 1; i<29; i++) //just picked 29 becuase thats the length of the board -2. Assuming we
+    {                        // aren't changing the size of the board
+        if (i == x)
+        {
+            GameMechsPtr -> setMessage(i, '*');
+        }
 
-    for (i=0; i<=7; i++)
+        else
+        {
+            GameMechsPtr -> setMessage(i, ' ');
+        }
+    }
+
+    printf("##############################\n"); 
+
+    for (i=0; i<14-1; i++)
     {
         if (i == y)
         {
-            for (j=0; j<20; j++)
+            for (j=0; j<30; j++)
             {
                 cout << GameMechsPtr -> getMessage(j); 
+               // cout << "11111111111111111111111111111111111111"; 
             }
 
             printf("\n"); 
@@ -114,11 +131,11 @@ void DrawScreen(void)
 
         else 
         {
-            printf("#                  #\n"); 
+            printf("#                            #\n"); 
         }
     }
     
-   printf("####################\n"); 
+   printf("##############################\n"); 
 
 
 }
