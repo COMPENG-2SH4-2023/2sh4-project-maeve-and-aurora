@@ -57,7 +57,6 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    cout << "hi" << endl; 
    if (MacUILib_hasChar())
     {
         GameMechsPtr -> setInput(MacUILib_getChar()); 
@@ -66,13 +65,17 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    cout << GameMechsPtr -> getInput(); 
-    if(GameMechsPtr -> getInput() != 0)
+    char input = GameMechsPtr -> getInput(); 
+    
+    if(input != 0)
     {
-        switch(GameMechsPtr -> getInput())
+        switch(input)
         {
             case 27:
                 GameMechsPtr -> setExitTrue(); 
+                break; 
+
+            default:
                 break; 
         }
     }
