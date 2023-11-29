@@ -49,6 +49,7 @@ void Initialize(void)
     MacUILib_clearScreen();
     GameMechsPtr = new GameMechs(); 
     GameMechs(); 
+    
 
    //GameMechsPtr -> getExitFlagStatus() 
 
@@ -66,6 +67,10 @@ void GetInput(void)
 void RunLogic(void)
 {
     char input = GameMechsPtr -> getInput(); 
+    int x = 5; 
+    int y = 5; 
+
+    
     
     if(input != 0)
     {
@@ -78,13 +83,43 @@ void RunLogic(void)
             default:
                 break; 
         }
+
+        GameMechsPtr -> clearInput(); 
     }
+
     
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();   
+    int i; 
+    int j;  
+    int x = GameMechsPtr ->getX(); 
+    int y = GameMechsPtr -> getY(); 
+
+    printf("####################\n"); 
+
+    for (i=0; i<=7; i++)
+    {
+        if (i == y)
+        {
+            for (j=0; j<20; j++)
+            {
+                cout << GameMechsPtr -> getMessage(j); 
+            }
+
+            printf("\n"); 
+        }
+
+        else 
+        {
+            printf("#                  #\n"); 
+        }
+    }
+    
+   printf("####################\n"); 
+
 
 }
 

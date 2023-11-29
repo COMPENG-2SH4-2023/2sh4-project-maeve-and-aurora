@@ -21,9 +21,10 @@ class GameMechs
     private:
         char input;
         bool exitFlag= false;
+        char message[31] = "#                            #"; 
         
-        int boardSizeX;
-        int boardSizeY;
+        int boardSizeX =15;
+        int boardSizeY =30;
 
         int *GameMechsD; 
 
@@ -41,6 +42,10 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
+
+        int getX(); 
+        int getY(); 
+        char getMessage(int pos); 
 
         
       
