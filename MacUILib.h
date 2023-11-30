@@ -18,5 +18,4 @@
 
 	typedef int (*print_ptr)(const char*, ...);  // function pointer
 	extern print_ptr MacUILib_printf;
-	
 #endif
