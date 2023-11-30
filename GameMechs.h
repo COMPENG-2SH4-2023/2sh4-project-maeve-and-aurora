@@ -28,6 +28,10 @@ class GameMechs
 
         int x = 14; 
         int y =5; 
+        int score=0; 
+
+        int foodX; 
+        int foodY; 
 
         int *GameMechsD; 
 
@@ -50,6 +54,9 @@ class GameMechs
         int getX(); 
         int getY(); 
         char getMessage(int pos); 
+
+        int getScore(); 
+        void incScore(int inc); 
 
         
       

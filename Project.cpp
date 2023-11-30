@@ -75,6 +75,7 @@ void RunLogic(void)
     
     if(input != 0)
     {
+        GameMechsPtr -> incScore(1); //this might need to move once the WASD move keys are implemented
         switch(input)
         {
             case 27:
@@ -101,7 +102,7 @@ void DrawScreen(void)
     int y = GameMechsPtr -> getY(); 
    GameMechs a = GameMechs(x, y); 
 
-    for (i = 1; i<29; i++) //just picked 29 becuase thats the length of the board -2. Assuming we
+    for (i = 1; i<29; i++) //just picked 29 becuase thats the length of the board -1. Assuming we
     {                        // aren't changing the size of the board
         if (i == x)
         {
@@ -123,7 +124,6 @@ void DrawScreen(void)
             for (j=0; j<30; j++)
             {
                 cout << GameMechsPtr -> getMessage(j); 
-               // cout << "11111111111111111111111111111111111111"; 
             }
 
             printf("\n"); 
@@ -136,6 +136,8 @@ void DrawScreen(void)
     }
     
    printf("##############################\n"); 
+
+   cout << "Score: " << GameMechsPtr ->getScore() << endl; 
 
 
 }

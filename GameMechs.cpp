@@ -12,7 +12,6 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 }
 
-// do you need a destructor?
 
 GameMechs::~GameMechs() 
 {
@@ -78,9 +77,19 @@ void GameMechs::clearInput()
     input = 0; 
 }
 
+
+int GameMechs::getScore()
+{
+    return(score); 
+}
+void GameMechs::incScore(int inc)
+{
+    score = score + inc; 
+
+}
+
 void GameMechs::setMessage(int pos, char input)
 {
     message[pos] = input; 
 }
-
 
