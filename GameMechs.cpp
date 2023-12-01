@@ -2,12 +2,28 @@
 
 GameMechs::GameMechs()
 {
-
+    //unused constructor
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
     int i; 
+    GameMechsD = new int[30];
+    GameMechsD[0] = 35; //ASCII #
+    for (i = 1; i<29; i++) //just picked 29 becuase thats the length of the board -1. Assuming we
+    {                        // aren't changing the size of the board
+        if (i == boardX)
+        {
+            GameMechsD[i] = 79; //ASCII O
+        }
+
+        else
+        {
+            GameMechsD[i] = 32; //ASCII space
+        }
+    }
+
+    GameMechsD[29] = 35; //ASCII #
 
 
 }
@@ -18,6 +34,23 @@ GameMechs::~GameMechs()
     delete[] GameMechsD;
 }
 
+bool GameMechs::GenerateFood()
+{
+    srand(time(0));
+
+    foodX = rand() % 27 + 1; //might have to play with ending nums
+    foodY = rand() % 12 + 1;
+
+    if ((foodX == x) && (foodY == y))
+    {
+        return(false); 
+    }
+
+    else
+    {
+        return(true); 
+    }
+}
 
 
 bool GameMechs::getExitFlagStatus()
@@ -80,6 +113,7 @@ void GameMechs::clearInput()
 
 int GameMechs::getScore()
 {
+    
     return(score); 
 }
 void GameMechs::incScore(int inc)
@@ -88,8 +122,23 @@ void GameMechs::incScore(int inc)
 
 }
 
-void GameMechs::setMessage(int pos, char input)
+int* GameMechs::getGameMechsD()
 {
-    message[pos] = input; 
+    return GameMechsD; 
+}
+
+// void GameMechs::setMessage(int pos, char input)
+// {
+//     message[pos] = input; 
+// }
+
+int GameMechs::getFoodX()
+{
+    return(foodX); 
+}
+
+int GameMechs::getFoodY()
+{
+    return(foodY); 
 }
 

@@ -23,6 +23,7 @@ void RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
+void genFoodGame(); 
 
 
 
@@ -50,7 +51,8 @@ void Initialize(void)
     MacUILib_clearScreen();
     GameMechsPtr = new GameMechs(); 
     GameMechs(); 
-    
+
+    genFoodGame(); 
 
    //GameMechsPtr -> getExitFlagStatus() 
 
@@ -81,6 +83,10 @@ void RunLogic(void)
             case 27:
                 GameMechsPtr -> setExitTrue(); 
                 break; 
+//FOR TESTING ONLY
+            // case 'a':
+            //     genFoodGame(); 
+            //     break; 
 
             default:
                 break; 
@@ -100,30 +106,21 @@ void DrawScreen(void)
     int j;  
     int x = GameMechsPtr ->getX(); 
     int y = GameMechsPtr -> getY(); 
-   GameMechs a = GameMechs(x, y); 
+    
+    int foodX = GameMechsPtr -> getFoodX(); 
+    int foodY = GameMechsPtr -> getFoodY(); 
+    GameMechs a = GameMechs(foodX, foodY); 
 
-    for (i = 1; i<29; i++) //just picked 29 becuase thats the length of the board -1. Assuming we
-    {                        // aren't changing the size of the board
-        if (i == x)
-        {
-            GameMechsPtr -> setMessage(i, '*');
-        }
-
-        else
-        {
-            GameMechsPtr -> setMessage(i, ' ');
-        }
-    }
 
     printf("##############################\n"); 
 
     for (i=0; i<14-1; i++)
     {
-        if (i == y)
+        if (i == foodY)
         {
             for (j=0; j<30; j++)
             {
-                cout << GameMechsPtr -> getMessage(j); 
+                cout << static_cast<char> (a.getGameMechsD()[j]); 
             }
 
             printf("\n"); 
@@ -154,4 +151,17 @@ void CleanUp(void)
     delete GameMechsPtr;  
   
     MacUILib_uninit();
+}
+
+void genFoodGame()
+{
+    bool foodgen; 
+
+    do
+    {
+       foodgen = GameMechsPtr -> GenerateFood(); 
+    }
+    while(foodgen == false); 
+    
+
 }

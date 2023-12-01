@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <time.h>
+#include <stdlib.h>
 
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -17,7 +18,7 @@ class GameMechs
     // Only some sample members are included here
 
     // You will include more data members and member functions to complete your design.
-
+    
     private:
         char input;
         bool exitFlag= false;
@@ -30,8 +31,8 @@ class GameMechs
         int y =5; 
         int score=0; 
 
-        int foodX; 
-        int foodY; 
+        int foodX;
+        int foodY;
 
         int *GameMechsD; 
 
@@ -42,7 +43,7 @@ class GameMechs
         
         bool getExitFlagStatus();
         void setExitTrue();
-        void setMessage(int pos, char input); 
+        //void setMessage(int pos, char input); 
 
         char getInput();
         void setInput(char this_input);
@@ -58,6 +59,13 @@ class GameMechs
         int getScore(); 
         void incScore(int inc); 
 
+        int* getGameMechsD(); 
+
+        int getFoodX(); 
+        int getFoodY(); 
+
+        
+        bool GenerateFood(); 
         
       
 
