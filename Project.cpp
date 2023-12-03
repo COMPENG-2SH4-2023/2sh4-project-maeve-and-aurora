@@ -63,7 +63,7 @@ Player::~Player()
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos arrray list
-    returnPos.setObjPos(playerPos.x, playerPos.x, playerPos.symbol);
+    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
 }
 
 void Player::updatePlayerDir()
@@ -240,12 +240,22 @@ void DrawScreen(void)
     {
         for(j = 0; j < 30; j++)
         {
+            if (i == playerPositions.y && j == playerPositions.x)
+            {
+                a.editBoard(i, j, playerPositions.symbol);
+            }
+            else if (i == foodY && j == foodX)
+            {
+                a.editBoard(i, j, 'O');
+            }
             cout << static_cast<char> (a.getGameMechsD(i, j)) ; 
         }
         cout << endl; 
     }
 
    cout << "Score: " << GameMechsPtr ->getScore() << endl; 
+   cout << playerPositions.x << endl;
+   cout << playerPositions.y << endl;
 
 }
 
