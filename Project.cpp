@@ -236,51 +236,16 @@ void DrawScreen(void)
     
     GameMechs a = GameMechs(foodX, foodY); 
 
-
-    printf("##############################\n"); 
-
-    for (i=0; i < 14-1; i++)
+    for(i = 0; i < 15; i++)
     {
-        if (i == playerPositions.y || i == foodY)
+        for(j = 0; j < 30; j++)
         {
-            for (j=0; j < 30; j++)
-            {
-                if (j == playerPositions.x)
-                {
-                    // change game board symbol to *
-                }
-                else if (j == foodX)
-                {
-                    // change game board symbol O
-                }
-            }
+            cout << static_cast<char> (a.getGameMechsD(i, j)) ; 
         }
+        cout << endl; 
     }
-
-    for (i=0; i<14-1; i++)
-    {
-        // print game data line by line
-        //cout << static_cast<char> (a.getGameMechsD(i));
-        if (i == foodY)
-        {
-            for (j=0; j<30; j++)
-            {
-                cout << static_cast<char> (a.getGameMechsD()[j]); 
-            }
-
-            printf("\n"); 
-        }
-
-        else 
-        {
-            printf("#                            #\n"); 
-        }
-    }
-    
-   printf("##############################\n"); 
 
    cout << "Score: " << GameMechsPtr ->getScore() << endl; 
-
 
 }
 
