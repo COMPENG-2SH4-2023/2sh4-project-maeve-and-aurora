@@ -8,10 +8,9 @@
 using namespace std;
 
 #define DELAY_CONST 100000
-//char message1[31] = "#                            #"; //For debuging, can be deleted
 
 //Global Varible Declaration
-//bool exitFlag; 
+objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
 
 //Pointer Declaration
 GameMechs* GameMechsPtr = nullptr; //game mechs pointer! There should be no other global varibles according to the manual
@@ -96,36 +95,44 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();   
-    int i; 
-    int j;  
-    int x = GameMechsPtr ->getX(); 
-    int y = GameMechsPtr -> getY(); 
+    int i, j, k;
     
-    int foodX = GameMechsPtr -> getFoodX(); 
+    int foodX = GameMechsPtr -> getFoodX(); // Get current food position
     int foodY = GameMechsPtr -> getFoodY();
-    objPos playerPositions;
-    player->getPlayerPos(playerPositions);
     
-    GameMechs a = GameMechs(foodX, foodY); 
+    player->getPlayerPos(playerPositions); // Get current snake positions
+    
+    GameMechs a = GameMechs(foodX, foodY); // Generate new clear board
+
+    objPos temp;
 
     for(i = 0; i < 15; i++)
     {
         for(j = 0; j < 30; j++)
         {
-            if (i == playerPositions.y && j == playerPositions.x)
+            // Check position for food 
+            if (i == foodY && j == foodX)
             {
-                a.editBoard(i, j, playerPositions.symbol);
+                a.editBoard(i, j, 'O'); // Add to board
             }
-            else if (i == foodY && j == foodX)
+
+            // Check position for snake
+            for(k=0; k < playerPositions.getSize(); k++)
             {
-                a.editBoard(i, j, 'O');
+                playerPositions.getElement(temp, k);
+
+                if (i == temp.y && j == temp.x) // Check each part of the snake
+                {
+                    a.editBoard(i, j, temp.symbol); // Add to board
+                }
             }
-            cout << static_cast<char> (a.getGameMechsD(i, j)) ; 
+
+            cout << static_cast<char> (a.getGameMechsD(i, j)) ; // Print appropriate symbol
         }
         cout << endl; 
     }
 
-   cout << "Score: " << GameMechsPtr ->getScore() << endl; 
+   cout << "Score: " << GameMechsPtr ->getScore() << endl; // Print current score
 
 }
 

@@ -7,9 +7,8 @@ GameMechs::GameMechs()
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
+    int i, j; 
 
-    int i=0; 
-    int j =0; 
     GameMechsD = new int*[15];
     for(i=0; i<15; i++)
     {
@@ -30,15 +29,13 @@ GameMechs::GameMechs(int boardX, int boardY)
             }
         }   
     }
-
-
 }
 
 
 GameMechs::~GameMechs() 
 {
     int i=0; 
-	
+
 	for(i=0; i<5; i++)
 	{
 		delete[] GameMechsD[i]; 

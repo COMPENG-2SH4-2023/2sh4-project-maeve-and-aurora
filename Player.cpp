@@ -4,28 +4,33 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.setObjPos(15,7,'*');
 
-    // more actions to be included
+    objPos startPos; // Temp object for starting position
+    startPos.setObjPos(15,7,'*');
+
+    playerPosList = new objPosArrayList[200]; // Initialize player list with starting position
+    playerPosList->insertHead(startPos);
 }
 
 Player::~Player()
 {
-    // delete any heap members here
+    // Delete heap members
+    delete playerPosList;
     delete mainGameMechsRef;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+void Player::getPlayerPos(objPosArrayList &returnPos)
 {
-    // return the reference to the playerPos arrray list
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    // Return address of player positions
+    returnPos = *playerPosList; 
 }
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic 
+    // Get current input 
     char input = mainGameMechsRef -> getInput(); 
 
+    // Change direction to new input according to direction change logic
     switch(input)
     {              
         case 'w':  // up
@@ -59,41 +64,57 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
-    // Update position in current direction
+    objPos currentPos;
+    objPos nextPos;
+    playerPosList->getHeadElement(currentPos); // Get current first position
+    nextPos.setObjPos(currentPos.x, currentPos.y, currentPos.symbol); // Copy to next position
+
+    // Update next position in current direction
     switch(myDir)
     {
         case UP:
-            playerPos.y--;
+            nextPos.y = currentPos.y - 1;
+            nextPos.x = currentPos.x;
             break;
         case LEFT:
-            playerPos.x--;
+            nextPos.y = currentPos.y;
+            nextPos.x = currentPos.x - 1;
             break;
         case DOWN:
-            playerPos.y++;
+            nextPos.y = currentPos.y + 1;
+            nextPos.x = currentPos.x;
             break;
         case RIGHT:
-            playerPos.x++;
+            nextPos.y = currentPos.y;
+            nextPos.x = currentPos.x + 1;
             break;
-        default:
+        default: // Next position remains the same as current if direction = STOP
             break;
     }
 
     // Switch sides at boarder
-    if(playerPos.x < 1)
+    if(nextPos.x < 1)
     {
-        playerPos.x = 30-2;
+        nextPos.x = 30-2;
     }
-    else if(playerPos.x > 30-2)
+    else if(nextPos.x > 30-2)
     {
-        playerPos.x = 1;
+        nextPos.x = 1;
     }
 
-    if(playerPos.y < 1)
+    if(nextPos.y < 1)
     {
-        playerPos.y = 15-2;
+        nextPos.y = 15-2;
     }
-    else if(playerPos.y > 15-2)
+    else if(nextPos.y > 15-2)
     {
-        playerPos.y = 1;
+        nextPos.y = 1;
+    }
+
+    // Move to next position if different than the current position
+    if ((nextPos.x == currentPos.x && nextPos.y == currentPos.y) == false)
+    {
+        playerPosList->insertHead(nextPos);
+        playerPosList->removeTail();
     }
 }
