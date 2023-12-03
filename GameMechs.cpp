@@ -8,30 +8,6 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
 
-    // int i=0; 
-    // int j =0; 
-    // GameMechsD = new int*[15];
-    // for(i=0; i<15; i++)
-    // {
-    //     GameMechsD[i] = new int[30]; 
-    // }
-
-    // for(i=0; i<15; i++)
-    // {
-    //     for(j=0; j<30; j++)
-    //     {
-    //         if((i==0) || (i==14))
-    //         {
-    //             GameMechsD[i][j] = '#';
-    //         }
-    //         else
-    //         {
-    //             GameMechsD[i][j] = ' '; 
-    //         }
-    //     } 
-    //     GameMechsD[i+1][j] = '\n';   
-    // }
-
     int i=0; 
     int j =0; 
     GameMechsD = new int*[15];
