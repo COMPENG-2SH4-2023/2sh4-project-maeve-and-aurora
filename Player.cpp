@@ -32,7 +32,7 @@ void Player::updatePlayerDir()
 
     // Change direction to new input according to direction change logic
     switch(input)
-    {              
+    {            
         case 'w':  // up
             if(myDir == STOP || myDir == LEFT || myDir == RIGHT)
             {
@@ -111,6 +111,7 @@ void Player::movePlayer()
         nextPos.y = 1;
     }
 
+    // Check for self collision
     checkSelfCollision(nextPos.x, nextPos.y);
 
     // Start movement to next position

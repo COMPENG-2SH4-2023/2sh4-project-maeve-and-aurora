@@ -2,7 +2,21 @@
 
 GameMechs::GameMechs()
 {
-    
+    input = NULL;
+    exitFlag = false;
+    loseFlag = false;
+    boardSizeX = 30;
+    boardSizeY = 15;
+    score = 0; 
+    foodX = 5;
+    foodY = 5;
+
+    int i; 
+    GameMechsD = new int*[15];
+    for(i=0; i<15; i++)
+    {
+        GameMechsD[i] = new int[30]; 
+    }
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -34,26 +48,28 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 GameMechs::~GameMechs() 
 {
-    int i=0; 
+    // int i=0; 
 
-	for(i=0; i<5; i++)
-	{
-		delete[] GameMechsD[i]; 
-	}
+	// for(i=0; i < 15; i++)
+	// {
+	// 	delete [] GameMechsD[i]; 
+	// }
 
 	delete[] GameMechsD; 
 }
 
 bool GameMechs::GenerateFood(objPosArrayList &playerPosList)
 {
+    // Seed random with current time
     srand(time(NULL));
 
+    // Get coordinates in game board range
     foodX = rand() % 27 + 1; //might have to play with ending nums
     foodY = rand() % 12 + 1;
     
+    // Verify that the current position doesn't overlap the player
     int i;
     objPos temp;
-
     for( i=0; i < playerPosList.getSize(); i++)
     {
         playerPosList.getElement(temp, i);
@@ -69,86 +85,89 @@ bool GameMechs::GenerateFood(objPosArrayList &playerPosList)
 
 bool GameMechs::getExitFlagStatus()
 {
-    return(exitFlag); 
+    // Return exit flag value
+    return exitFlag; 
 }
 
 bool GameMechs::getLoseFlagStatus()
 {
-    return(loseFlag); 
-}
-
-char GameMechs::getInput()
-{
-    return(input); 
+    // Return lose flag value
+    return loseFlag; 
 }
 
 int GameMechs::getBoardSizeX()
 {
-    return(boardSizeX); 
+    // Return the x dimension of the game board
+    return boardSizeX; 
 }
 
 int GameMechs::getBoardSizeY()
 {
-    return(boardSizeY); 
+    // Return the y dimension of the game board
+    return boardSizeY; 
 }
 
 void GameMechs::setExitTrue()
 {
+    // Set exit flag to true
     exitFlag = true; 
 }
 
 void GameMechs::setLoseTrue()
 {
+    // Set lose flag to true
     loseFlag = true; 
-}
-
-int GameMechs::getX()
-{
-    return(x); 
-}
-
-int GameMechs::getY()
-{
-    return(y);  
 }
 
 void GameMechs::setInput(char this_input)
 {
+    // Set input 
     input = this_input; 
+}
+
+char GameMechs::getInput()
+{
+    // Return input value
+    return input; 
 }
 
 void GameMechs::clearInput()
 {
+    // Reset input to NULL
     input = 0; 
 }
 
 int GameMechs::getScore()
 {
-    return(score); 
+    // Return score value
+    return score; 
 }
 void GameMechs::incScore(int inc)
 {
+    // Increase score value by one
     score = score + inc; 
 }
 
 int GameMechs::getGameMechsD(int i, int j)
 {
+    // Return symbol at given location
     return GameMechsD[i][j]; 
 }
 
 int GameMechs::getFoodX()
 {
-    return(foodX); 
+    // Return food x coordinate 
+    return foodX; 
 }
 
 int GameMechs::getFoodY()
 {
-    return(foodY); 
+    // Return food y coordinate
+    return foodY; 
 }
 
 void GameMechs::editBoard(int i, int j, int sym)
 {
-
+    // Set new symbol at given location
     GameMechsD[i][j] = sym; 
-
 }

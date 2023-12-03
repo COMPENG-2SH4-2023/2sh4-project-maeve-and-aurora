@@ -24,12 +24,10 @@ class GameMechs
         bool exitFlag = false;
         bool loseFlag = false;
         
-        int boardSizeX =30;
-        int boardSizeY =15;
+        int boardSizeX = 30;
+        int boardSizeY = 15;
 
-        int x = 14; 
-        int y =5; 
-        int score=0; 
+        int score = 0; 
 
         int foodX;
         int foodY;
@@ -52,10 +50,6 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
-
-        int getX(); 
-        int getY(); 
-        char getMessage(int pos); 
 
         int getScore(); 
         void incScore(int inc); 

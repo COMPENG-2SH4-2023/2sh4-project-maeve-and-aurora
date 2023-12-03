@@ -4,7 +4,6 @@
 #include "GameMechs.h" 
 #include "Player.h" 
 
-
 using namespace std;
 
 #define DELAY_CONST 100000
@@ -16,7 +15,6 @@ objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
 GameMechs* GameMechsPtr = nullptr; //game mechs pointer! There should be no other global varibles according to the manual
 Player* player = nullptr;
 
-
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -25,11 +23,8 @@ void LoopDelay(void);
 void CleanUp(void);
 void genFoodGame(); 
 
-
-
 int main(void)
 {
-
     Initialize();
 
     while(GameMechsPtr -> getExitFlagStatus() == false)  
@@ -41,25 +36,26 @@ int main(void)
     }
 
     CleanUp();
-
 }
-
 
 void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    GameMechsPtr = new GameMechs(); 
-    GameMechs(); 
 
+    // Allocate/Initialize global variables
+    GameMechsPtr = new GameMechs(); 
     player = new Player(GameMechsPtr);
 
-    genFoodGame(); 
+    player->getPlayerPos(playerPositions);
 
+    // Generate first food item
+    genFoodGame(); 
 }
 
 void GetInput(void)
 {
+    // Check input value
     if (MacUILib_hasChar())
     {
         GameMechsPtr -> setInput(MacUILib_getChar()); 
@@ -69,13 +65,13 @@ void GetInput(void)
 
     if (input)
     {
-        if (input == 27)
+        if (input == ' ') // Exit with spacebar 
         {
-            GameMechsPtr -> setExitTrue();
+            GameMechsPtr->setExitTrue();
         }
         else
         {
-            player -> updatePlayerDir();
+            player->updatePlayerDir();
         }
     }
    
@@ -129,10 +125,11 @@ void DrawScreen(void)
     }
 
     cout << "Score: " << GameMechsPtr ->getScore() << endl; // Print current score
+    cout << "Exit with SPACE" << endl;
     
     if(GameMechsPtr->getLoseFlagStatus())
     {
-        cout << "You lose! Score: " << GameMechsPtr ->getScore() << endl;
+        cout << "You lose! Score: " << GameMechsPtr ->getScore() << endl; // Print lose message
     }
 }
 
@@ -144,6 +141,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {  
+    // Deallocate global pointers
     delete GameMechsPtr; 
     delete player; 
   
@@ -152,6 +150,7 @@ void CleanUp(void)
 
 void genFoodGame()
 {
+    // Generate food item that doesn't overlap player position
     bool foodgen; 
     player->getPlayerPos(playerPositions);
 
@@ -160,6 +159,4 @@ void genFoodGame()
        foodgen = GameMechsPtr -> GenerateFood(playerPositions); 
     }
     while(foodgen == false); 
-    
-
 }
