@@ -62,9 +62,8 @@ class GameMechs
 
         int getFoodX(); 
         int getFoodY(); 
-
         
-        bool GenerateFood(); 
+        bool GenerateFood(objPosArrayList &playerPosList); 
 
         void editBoard(int i, int j, int sym); 
 };

@@ -115,6 +115,34 @@ void Player::movePlayer()
     if ((nextPos.x == currentPos.x && nextPos.y == currentPos.y) == false)
     {
         playerPosList->insertHead(nextPos);
-        playerPosList->removeTail();
+
+        // Check for collision with food
+        if (checkFoodConsumption())
+        {
+            mainGameMechsRef->incScore(1);
+            mainGameMechsRef->GenerateFood(*playerPosList);
+        }
+        else
+        {
+            playerPosList->removeTail(); // Finish movement
+        }
+    }
+}
+
+bool Player::checkFoodConsumption()
+{
+    int foodX = mainGameMechsRef -> getFoodX();
+    int foodY = mainGameMechsRef -> getFoodY();
+
+    objPos head;
+    playerPosList->getHeadElement(head);
+
+    if (head.x == foodX && head.y == foodY)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }

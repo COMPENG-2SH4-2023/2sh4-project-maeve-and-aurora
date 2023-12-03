@@ -44,22 +44,27 @@ GameMechs::~GameMechs()
 	delete[] GameMechsD; 
 }
 
-bool GameMechs::GenerateFood()
+bool GameMechs::GenerateFood(objPosArrayList &playerPosList)
 {
     srand(time(NULL));
 
     foodX = rand() % 27 + 1; //might have to play with ending nums
     foodY = rand() % 12 + 1;
+    
+    int i;
+    objPos temp;
 
-    if ((foodX == x) && (foodY == y))
+    for( i=0; i < playerPosList.getSize(); i++)
     {
-        return(false); 
+        playerPosList.getElement(temp, i);
+
+        if ((foodX == temp.x) && (foodY == temp.y))
+        {
+            return false; 
+        }        
     }
 
-    else
-    {
-        return(true); 
-    }
+    return true; 
 }
 
 bool GameMechs::getExitFlagStatus()

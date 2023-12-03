@@ -16,6 +16,8 @@ class Player
         void getPlayerPos(objPosArrayList &returnPos);
         void updatePlayerDir();
         void movePlayer();
+        bool checkFoodConsumption();
+    
 
     private:
         objPosArrayList* playerPosList;         

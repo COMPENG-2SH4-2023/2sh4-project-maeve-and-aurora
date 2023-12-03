@@ -101,7 +101,7 @@ void DrawScreen(void)
     int foodY = GameMechsPtr -> getFoodY();
     
     player->getPlayerPos(playerPositions); // Get current snake positions
-    
+
     GameMechs a = GameMechs(foodX, foodY); // Generate new clear board
 
     objPos temp;
@@ -154,10 +154,11 @@ void CleanUp(void)
 void genFoodGame()
 {
     bool foodgen; 
+    player->getPlayerPos(playerPositions);
 
     do
     {
-       foodgen = GameMechsPtr -> GenerateFood(); 
+       foodgen = GameMechsPtr -> GenerateFood(playerPositions); 
     }
     while(foodgen == false); 
     
