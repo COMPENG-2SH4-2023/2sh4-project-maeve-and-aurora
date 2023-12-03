@@ -17,6 +17,137 @@ using namespace std;
 //Pointer Declaration
 GameMechs* GameMechsPtr = nullptr; //game mechs pointer! There should be no other global varibles according to the manual
 
+
+class Player
+{
+    // Construct the remaining declaration from the project manual.
+
+    // Only some sample members are included here
+
+    // You will include more data members and member functions to complete your design.
+
+    public:
+        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
+
+        Player(GameMechs* thisGMRef);
+        ~Player();
+
+        void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
+        void updatePlayerDir();
+        void movePlayer();
+
+    private:
+        objPos playerPos;   // Upgrade this in iteration 3.       
+        enum Dir myDir;
+
+        // Need a reference to the Main Game Mechanisms
+        GameMechs* mainGameMechsRef;
+};
+
+Player::Player(GameMechs* thisGMRef)
+{
+    mainGameMechsRef = thisGMRef;
+    myDir = STOP;
+    playerPos.setObjPos(15,7,'*');
+
+    // more actions to be included
+}
+
+
+Player::~Player()
+{
+    // delete any heap members here
+    delete mainGameMechsRef;
+}
+
+void Player::getPlayerPos(objPos &returnPos)
+{
+    // return the reference to the playerPos arrray list
+    returnPos.setObjPos(playerPos.x, playerPos.x, playerPos.symbol);
+}
+
+void Player::updatePlayerDir()
+{
+    // PPA3 input processing logic 
+    char input = mainGameMechsRef -> getInput(); 
+
+    switch(input)
+    {              
+        case 'w':  // up
+            if(myDir == STOP || myDir == LEFT || myDir == RIGHT)
+            {
+                myDir = UP;
+            }
+            break;
+        case 'a':  // left
+            if(myDir == STOP || myDir == UP || myDir == DOWN)
+            {
+                myDir = LEFT;
+            }
+            break;
+        case 's':  // down
+            if(myDir == STOP || myDir == LEFT || myDir == RIGHT)
+            {
+                myDir = DOWN;
+            }
+            break;
+        case 'd':  // right
+            if(myDir == STOP || myDir == UP || myDir == DOWN)
+            {
+                myDir = RIGHT;
+            }
+            break;
+        default:
+            break;
+    }      
+}
+
+void Player::movePlayer()
+{
+    // PPA3 Finite State Machine logic
+    switch(myDir)
+    {
+        case UP:
+            playerPos.y--;
+            break;
+        case LEFT:
+            playerPos.x--;
+            break;
+        case DOWN:
+            playerPos.y++;
+            break;
+        case RIGHT:
+            playerPos.x++;
+            break;
+        default:
+            break;
+    }
+
+    int boardSizeX = mainGameMechsRef -> getBoardSizeX();
+    int boardSizeY = mainGameMechsRef -> getBoardSizeY();
+
+    if(playerPos.x < 1)
+    {
+        playerPos.x = boardSizeX-2;
+    }
+    else if(playerPos.x > boardSizeX-2)
+    {
+        playerPos.x = 1;
+    }
+
+    if(playerPos.y < 1)
+    {
+        playerPos.y = boardSizeY-2;
+    }
+    else if(playerPos.y > boardSizeY-2)
+    {
+        playerPos.y = 1;
+    }
+}
+
+Player* player = nullptr;
+
+
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -52,51 +183,42 @@ void Initialize(void)
     GameMechsPtr = new GameMechs(); 
     GameMechs(); 
 
+    player = new Player(GameMechsPtr);
+
     genFoodGame(); 
 
-   //GameMechsPtr -> getExitFlagStatus() 
-
-    
 }
 
 void GetInput(void)
 {
-   if (MacUILib_hasChar())
+    if (MacUILib_hasChar())
     {
         GameMechsPtr -> setInput(MacUILib_getChar()); 
     }
+
+    int input = GameMechsPtr->getInput();
+
+    if (input)
+    {
+        if (input == 27)
+        {
+            GameMechsPtr -> setExitTrue();
+        }
+        else
+        {
+            player -> updatePlayerDir();
+        }
+    }
+   
+   GameMechsPtr -> clearInput();
 }
 
 void RunLogic(void)
 {
-    char input = GameMechsPtr -> getInput(); 
-    int x = GameMechsPtr -> getX(); 
-    int y = GameMechsPtr -> getY(); 
 
-    
-    
-    if(input != 0)
-    {
-        GameMechsPtr -> incScore(1); //this might need to move once the WASD move keys are implemented
-        switch(input)
-        {
-            case 27:
-                GameMechsPtr -> setExitTrue(); 
-                break; 
-//FOR TESTING ONLY
-            // case 'a':
-            //     genFoodGame(); 
-            //     break; 
+    // if food is eaten
+    // GameMechsPtr -> incScore(1);
 
-            default:
-                break; 
-        }
-
-        GameMechsPtr -> clearInput(); 
-    }
-
-    
-    
 }
 
 void DrawScreen(void)
@@ -108,14 +230,37 @@ void DrawScreen(void)
     int y = GameMechsPtr -> getY(); 
     
     int foodX = GameMechsPtr -> getFoodX(); 
-    int foodY = GameMechsPtr -> getFoodY(); 
+    int foodY = GameMechsPtr -> getFoodY();
+    objPos playerPositions;
+    player->getPlayerPos(playerPositions);
+    
     GameMechs a = GameMechs(foodX, foodY); 
 
 
     printf("##############################\n"); 
 
+    for (i=0; i < 14-1; i++)
+    {
+        if (i == playerPositions.y || i == foodY)
+        {
+            for (j=0; j < 30; j++)
+            {
+                if (j == playerPositions.x)
+                {
+                    // change game board symbol to *
+                }
+                else if (j == foodX)
+                {
+                    // change game board symbol O
+                }
+            }
+        }
+    }
+
     for (i=0; i<14-1; i++)
     {
+        // print game data line by line
+        //cout << static_cast<char> (a.getGameMechsD(i));
         if (i == foodY)
         {
             for (j=0; j<30; j++)
@@ -148,7 +293,8 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();   
-    delete GameMechsPtr;  
+    delete GameMechsPtr; 
+    delete player; 
   
     MacUILib_uninit();
 }

@@ -66,9 +66,6 @@ class GameMechs
 
         
         bool GenerateFood(); 
-        
-      
-
 };
 
 #endif
