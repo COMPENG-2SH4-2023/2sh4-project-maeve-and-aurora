@@ -65,6 +65,8 @@ class GameMechs
 
         
         bool GenerateFood(); 
+
+        void editBoard(int i, int j, int sym); 
 };
 
 #endif

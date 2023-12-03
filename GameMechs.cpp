@@ -126,3 +126,10 @@ int GameMechs::getFoodY()
 {
     return(foodY); 
 }
+
+void GameMechs::editBoard(int i, int j, int sym)
+{
+
+    GameMechsD[i][j] = sym; 
+
+}
