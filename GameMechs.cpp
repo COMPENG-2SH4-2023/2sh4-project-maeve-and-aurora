@@ -37,12 +37,12 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 GameMechs::~GameMechs() 
 {
-    // int i=0; 
+    int i=0; 
 	
-	// for(i=0; i<15; i++)
-	// {
-	// 	delete[] GameMechsD[i]; 
-	// }
+	for(i=0; i<5; i++)
+	{
+		delete[] GameMechsD[i]; 
+	}
 
 	delete[] GameMechsD; 
 }
