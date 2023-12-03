@@ -23,8 +23,8 @@ class GameMechs
         char input;
         bool exitFlag= false;
         
-        int boardSizeX =15;
-        int boardSizeY =30;
+        int boardSizeX =30;
+        int boardSizeY =15;
 
         int x = 14; 
         int y =5; 
