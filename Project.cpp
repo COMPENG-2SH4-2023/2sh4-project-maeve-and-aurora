@@ -109,30 +109,41 @@ void DrawScreen(void)
     
     int foodX = GameMechsPtr -> getFoodX(); 
     int foodY = GameMechsPtr -> getFoodY(); 
+
     GameMechs a = GameMechs(foodX, foodY); 
 
 
-    printf("##############################\n"); 
+    //printf("##############################\n"); 
 
-    for (i=0; i<14-1; i++)
+    for(i = 0; i < 15; i++)
     {
-        if (i == foodY)
+        for(j = 0; j < 30; j++)
         {
-            for (j=0; j<30; j++)
-            {
-                cout << static_cast<char> (a.getGameMechsD()[j]); 
-            }
-
-            printf("\n"); 
+            cout << static_cast<char> (a.getGameMechsD(i, j)) ; 
         }
-
-        else 
-        {
-            printf("#                            #\n"); 
-        }
+        cout << endl; 
     }
+	 	
+
+    // for (i=0; i<14-1; i++)
+    // {
+    //     if (i == foodY)
+    //     {
+    //         for (j=0; j<30; j++)
+    //         {
+    //             cout << static_cast<char> (a.getGameMechsD(i)[j]); 
+    //         }
+
+    //         printf("\n"); 
+    //     }
+
+    //     else 
+    //     {
+    //         printf("#                            #\n"); 
+    //     }
+    // }
     
-   printf("##############################\n"); 
+   //printf("##############################\n"); 
 
    cout << "Score: " << GameMechsPtr ->getScore() << endl; 
 

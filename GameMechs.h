@@ -22,7 +22,6 @@ class GameMechs
     private:
         char input;
         bool exitFlag= false;
-        char message[31] = "#                            #"; 
         
         int boardSizeX =15;
         int boardSizeY =30;
@@ -34,7 +33,7 @@ class GameMechs
         int foodX;
         int foodY;
 
-        int *GameMechsD; 
+        int **GameMechsD; 
 
     public:
         GameMechs();
@@ -59,15 +58,13 @@ class GameMechs
         int getScore(); 
         void incScore(int inc); 
 
-        int* getGameMechsD(); 
+        int getGameMechsD(int i, int j); 
 
         int getFoodX(); 
         int getFoodY(); 
 
         
         bool GenerateFood(); 
-        
-      
 
 };
 
