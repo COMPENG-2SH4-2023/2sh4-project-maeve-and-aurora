@@ -37,7 +37,14 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 GameMechs::~GameMechs() 
 {
-    delete[] GameMechsD;
+    // int i=0; 
+	
+	// for(i=0; i<15; i++)
+	// {
+	// 	delete[] GameMechsD[i]; 
+	// }
+
+	delete[] GameMechsD; 
 }
 
 bool GameMechs::GenerateFood()
