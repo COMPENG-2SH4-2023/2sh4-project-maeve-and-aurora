@@ -21,7 +21,8 @@ class GameMechs
     
     private:
         char input;
-        bool exitFlag= false;
+        bool exitFlag = false;
+        bool loseFlag = false;
         
         int boardSizeX =30;
         int boardSizeY =15;
@@ -42,7 +43,8 @@ class GameMechs
         
         bool getExitFlagStatus();
         void setExitTrue();
-        //void setMessage(int pos, char input); 
+        bool getLoseFlagStatus();
+        void setLoseTrue(); 
 
         char getInput();
         void setInput(char this_input);

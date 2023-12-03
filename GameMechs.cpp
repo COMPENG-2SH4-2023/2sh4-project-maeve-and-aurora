@@ -72,6 +72,11 @@ bool GameMechs::getExitFlagStatus()
     return(exitFlag); 
 }
 
+bool GameMechs::getLoseFlagStatus()
+{
+    return(loseFlag); 
+}
+
 char GameMechs::getInput()
 {
     return(input); 
@@ -90,6 +95,11 @@ int GameMechs::getBoardSizeY()
 void GameMechs::setExitTrue()
 {
     exitFlag = true; 
+}
+
+void GameMechs::setLoseTrue()
+{
+    loseFlag = true; 
 }
 
 int GameMechs::getX()

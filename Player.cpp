@@ -69,7 +69,7 @@ void Player::movePlayer()
     playerPosList->getHeadElement(currentPos); // Get current first position
     nextPos.setObjPos(currentPos.x, currentPos.y, currentPos.symbol); // Copy to next position
 
-    // Update next position in current direction
+    // Calculate next position in current direction
     switch(myDir)
     {
         case UP:
@@ -111,21 +111,20 @@ void Player::movePlayer()
         nextPos.y = 1;
     }
 
-    // Move to next position if different than the current position
-    if ((nextPos.x == currentPos.x && nextPos.y == currentPos.y) == false)
-    {
-        playerPosList->insertHead(nextPos);
+    checkSelfCollision(nextPos.x, nextPos.y);
 
-        // Check for collision with food
-        if (checkFoodConsumption())
-        {
-            mainGameMechsRef->incScore(1);
-            mainGameMechsRef->GenerateFood(*playerPosList);
-        }
-        else
-        {
-            playerPosList->removeTail(); // Finish movement
-        }
+    // Start movement to next position
+    playerPosList->insertHead(nextPos);
+
+    // Check for collision with food
+    if (checkFoodConsumption())
+    {
+        mainGameMechsRef->incScore(1);
+        mainGameMechsRef->GenerateFood(*playerPosList);
+    }
+    else
+    {
+        playerPosList->removeTail(); // Finish full movement since food not collected/length not added
     }
 }
 
@@ -144,5 +143,22 @@ bool Player::checkFoodConsumption()
     else
     {
         return false;
+    }
+}
+
+void Player::checkSelfCollision(int x, int y)
+{
+    int i;
+    objPos body;
+
+    for( i=1; i < playerPosList->getSize(); i++)
+    {
+        playerPosList->getElement(body, i);
+
+        if (x == body.x && y == body.y)
+        {
+            mainGameMechsRef->setExitTrue();
+            mainGameMechsRef->setLoseTrue();
+        }
     }
 }

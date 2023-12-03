@@ -17,7 +17,8 @@ class Player
         void updatePlayerDir();
         void movePlayer();
         bool checkFoodConsumption();
-    
+        void checkSelfCollision(int x, int y);
+
 
     private:
         objPosArrayList* playerPosList;         

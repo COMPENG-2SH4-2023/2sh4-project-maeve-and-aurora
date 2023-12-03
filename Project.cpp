@@ -84,12 +84,8 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    // move player in current direction 
+    // Move player in current direction, checking for collisions
     player->movePlayer();
-
-    // if food is eaten
-    // GameMechsPtr -> incScore(1);
-
 }
 
 void DrawScreen(void)
@@ -132,8 +128,12 @@ void DrawScreen(void)
         cout << endl; 
     }
 
-   cout << "Score: " << GameMechsPtr ->getScore() << endl; // Print current score
-
+    cout << "Score: " << GameMechsPtr ->getScore() << endl; // Print current score
+    
+    if(GameMechsPtr->getLoseFlagStatus())
+    {
+        cout << "You lose! Score: " << GameMechsPtr ->getScore() << endl;
+    }
 }
 
 void LoopDelay(void)
@@ -143,8 +143,7 @@ void LoopDelay(void)
 
 
 void CleanUp(void)
-{
-    MacUILib_clearScreen();   
+{  
     delete GameMechsPtr; 
     delete player; 
   
