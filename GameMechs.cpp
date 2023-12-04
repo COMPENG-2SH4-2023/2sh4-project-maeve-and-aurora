@@ -29,31 +29,19 @@ GameMechs::GameMechs(int boardX, int boardY)
         GameMechsD[i] = new int[30]; 
     }
 
-    for(i=0; i<15; i++)
-    {
-        for(j=0; j<30; j++)
-        {
-            if((i==0) || (i==14)|| (j==0) || (j==29))
-            {
-                GameMechsD[i][j] = '#';
-            }
-            else
-            {
-                GameMechsD[i][j] = ' '; 
-            }
-        }   
-    }
+    reset(); 
+    
 }
 
 
 GameMechs::~GameMechs() 
 {
-    // int i=0; 
+    int i=0; 
 
-	// for(i=0; i < 15; i++)
-	// {
-	// 	delete [] GameMechsD[i]; 
-	// }
+	for(i=0; i < 15; i++)
+	{
+		delete [] GameMechsD[i]; 
+	}
 
 	delete[] GameMechsD; 
 }
@@ -170,4 +158,24 @@ void GameMechs::editBoard(int i, int j, int sym)
 {
     // Set new symbol at given location
     GameMechsD[i][j] = sym; 
+}
+
+void GameMechs::reset() 
+{
+    int i, j; 
+
+    for(i=0; i<15; i++)
+    {
+        for(j=0; j<30; j++)
+        {
+            if((i==0) || (i==14)|| (j==0) || (j==29))
+            {
+                GameMechsD[i][j] = '#';
+            }
+            else
+            {
+                GameMechsD[i][j] = ' '; 
+            }
+        }   
+    }
 }

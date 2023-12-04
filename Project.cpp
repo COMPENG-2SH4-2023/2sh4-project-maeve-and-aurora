@@ -11,6 +11,7 @@ using namespace std;
 
 //Global Varible Declaration
 objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
+GameMechs a = GameMechs(0, 0); // Generate new clear board
 
 //Pointer Declaration
 GameMechs* GameMechsPtr = nullptr; 
@@ -96,7 +97,7 @@ void DrawScreen(void)
     
     playerPtr->getPlayerPos(playerPositions); // Get current snake positions
 
-    GameMechs a = GameMechs(foodX, foodY); // Generate new clear board
+    GameMechsPtr -> reset();
 
     objPos temp;
 
