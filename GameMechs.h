@@ -62,6 +62,7 @@ class GameMechs
         bool GenerateFood(objPosArrayList &playerPosList); 
 
         void editBoard(int i, int j, int sym); 
+        void reset(); 
 };
 
 #endif

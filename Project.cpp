@@ -10,6 +10,7 @@ using namespace std;
 
 //Global Varible Declaration
 objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
+GameMechs a = GameMechs(0, 0); // Generate new clear board
 
 //Pointer Declaration
 GameMechs* GameMechsPtr = nullptr; //game mechs pointer! There should be no other global varibles according to the manual
@@ -46,6 +47,8 @@ void Initialize(void)
     // Allocate/Initialize global variables
     GameMechsPtr = new GameMechs(); 
     player = new Player(GameMechsPtr);
+
+    
 
     player->getPlayerPos(playerPositions);
 
@@ -94,7 +97,7 @@ void DrawScreen(void)
     
     player->getPlayerPos(playerPositions); // Get current snake positions
 
-    GameMechs a = GameMechs(foodX, foodY); // Generate new clear board
+    GameMechsPtr -> reset();
 
     objPos temp;
 
