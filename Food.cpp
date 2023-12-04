@@ -1,47 +1,79 @@
 #include "Food.h"
 
-Food::Food() //GameMechs* thisGMRef, Player* thisPlayerRef
+Food::Food()
 {
-    // Reference pointers
-    //mainGameMechsRef = thisGMRef;
-    //mainPlayerRef = thisPlayerRef;
+    objPos initial;
+    initial.setObjPos(0,0,'O');
 
-    // Initialize food list
-    foodBucket = new objPosArrayList[5];
+    // Initialize empty food list of length 5
+    foodBucket = new objPosArrayList(5);
+    foodBucket->insertHead(initial);
+    foodBucket->insertHead(initial);
+    foodBucket->insertHead(initial);
+    foodBucket->insertHead(initial);
+    foodBucket->insertHead(initial);
 }
 
 Food::~Food()
 {
-    delete[] foodBucket;
+    delete foodBucket;
 }
-
 
 void Food::getFoodPos(objPosArrayList &returnPos)
 {
     returnPos = *foodBucket;
 }
 
-bool Food::GenerateFood(objPosArrayList &playerPosList)
+void Food::getSymbol(char &returnPos, int index)
 {
-    // Seed random with current time
-    srand(time(NULL));
+    objPos target;
+    foodBucket->getElement(target, index);
+    returnPos = target.symbol;
+}
 
-    // Get coordinates in game board range
-    foodX = rand() % 27 + 1; //might have to play with ending nums
-    foodY = rand() % 12 + 1;
-    
-    // Verify that the current position doesn't overlap the player
-    int i;
+void Food::GenerateFood(objPosArrayList &playerPosList, int index)
+{
+    bool foodGen; 
+    int i, symbolVar;
+    objPos food;
     objPos temp;
-    for( i=0; i < playerPosList.getSize(); i++)
+
+    // Get target food item
+    foodBucket->getElement(food, index);
+    foodBucket->removeElement(index);
+
+    do
     {
-        playerPosList.getElement(temp, i);
+        foodGen = true;
 
-        if ((foodX == temp.x) && (foodY == temp.y))
+        // Get coordinates in game board range
+        food.x = rand() % 27 + 1; 
+        food.y = rand() % 12 + 1; 
+
+        // Verify that the current position doesn't overlap the player
+        for(i=0; i < playerPosList.getSize(); i++)
         {
-            return false; 
-        }        
-    }
+            playerPosList.getElement(temp, i);
 
-    return true; 
+            if ((food.x == temp.x) && (food.y == temp.y)) { foodGen = false; }
+        }
+
+        // Verify current position doesn't overlap other food items
+        for(i=0; i < 5; i++)
+        {
+            foodBucket->getElement(temp, i);
+
+            if ((food.x == temp.x) && (food.y == temp.y)) { foodGen = false; }
+        }
+    }
+    while(foodGen == false); 
+
+    // Generate value from 0-100 for symbol
+    symbolVar = rand() % 100;
+
+    if(symbolVar < 80) { food.symbol = 'O'; }   // 0-79 = +1 to score and length
+    else if(symbolVar < 90) { food.symbol = 'X'; }  // 80-89 = +10 to score
+    else { food.symbol = 'I'; } // 90-100 = -1 to length
+
+    foodBucket->insertHead(food);
 }

@@ -1,9 +1,9 @@
 #include "Player.h"
 
-Player::Player(GameMechs* thisGMRef) //, Food* foodBinRef
+Player::Player(GameMechs* thisGMRef, Food* foodBinRef)
 {
     mainGameMechsRef = thisGMRef;
-    //mainFoodBinRef = foodBinRef;
+    mainFoodBinRef = foodBinRef;
     myDir = STOP;
 
     objPos startPos; // Temp object for starting position
@@ -117,11 +117,39 @@ void Player::movePlayer()
     // Start movement to next position
     playerPosList->insertHead(nextPos);
 
-    // Check for collision with food
-    if (checkFoodConsumption())
+    // Check for collision with food, false if index > list length
+    int collisionIndex = checkFoodConsumption();
+
+    // Apply collision conditions
+    if (collisionIndex != 10)
     {
-        mainGameMechsRef->incScore(1);
-        mainGameMechsRef->GenerateFood(*playerPosList);
+        char symbol;
+        mainFoodBinRef->getSymbol(symbol, collisionIndex);
+
+        switch(symbol)
+        {
+            case 'O':
+                mainGameMechsRef->incScore(1);  
+                break;
+            case 'X':
+                mainGameMechsRef->incScore(10);
+                break;
+            case 'I':
+                playerPosList->removeTail(); // Remove once to finish current movement
+
+                // Reduce length by 1 as long as the snake is longer than one piece
+                if(playerPosList->getSize() > 1) 
+                { 
+                    playerPosList->removeTail(); 
+                } 
+                
+                break;
+            default:
+                break;
+        }
+
+        // Replace collided food item
+        mainFoodBinRef->GenerateFood(*playerPosList, collisionIndex);
     }
     else
     {
@@ -129,22 +157,25 @@ void Player::movePlayer()
     }
 }
 
-bool Player::checkFoodConsumption()
+int Player::checkFoodConsumption()
 {
-    int foodX = mainGameMechsRef -> getFoodX();
-    int foodY = mainGameMechsRef -> getFoodY();
-
-    objPos head;
+    int i;
+    objPosArrayList* foodPositions;
+    objPos head, food;
+    mainFoodBinRef->getFoodPos(*foodPositions);
     playerPosList->getHeadElement(head);
 
-    if (head.x == foodX && head.y == foodY)
+    for(i=0; i < 5; i++)
     {
-        return true;
+        foodPositions->getElement(food, i);
+
+        if (head.x == food.x && head.y == food.y) // Check all 5 food items
+        {
+            return i; // If hit any food, return index
+        }
     }
-    else
-    {
-        return false;
-    }
+
+    return 10; // Otherwise will return greater than list size
 }
 
 void Player::checkSelfCollision(int x, int y)

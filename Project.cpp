@@ -11,12 +11,12 @@ using namespace std;
 
 //Global Varible Declaration
 objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
-GameMechs a = GameMechs(0, 0); // Generate new clear board
+objPosArrayList foodPositions;
 
 //Pointer Declaration
 GameMechs* GameMechsPtr = nullptr; 
 Player* playerPtr = nullptr;
-//Food* foodPtr = nullptr;
+Food* foodPtr = nullptr;
 
 void Initialize(void);
 void GetInput(void);
@@ -24,7 +24,7 @@ void RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
-void genFoodGame(); 
+void GenerateNewFood();
 
 int main(void)
 {
@@ -48,12 +48,15 @@ void Initialize(void)
 
     // Allocate/Initialize global variables
     GameMechsPtr = new GameMechs(); 
-    //foodPtr = new Food();
-    playerPtr = new Player(GameMechsPtr); //, foodPtr
+    foodPtr = new Food();
+    playerPtr = new Player(GameMechsPtr, foodPtr);
     playerPtr->getPlayerPos(playerPositions);
 
-    // Generate first food item
-    genFoodGame(); 
+    // Seed random with current time
+    srand(time(NULL));
+
+    // Generate first 5 food items
+    GenerateNewFood();
 }
 
 void GetInput(void)
@@ -92,9 +95,10 @@ void DrawScreen(void)
     MacUILib_clearScreen();   
     int i, j, k;
     
-    int foodX = GameMechsPtr -> getFoodX(); // Get current food position
-    int foodY = GameMechsPtr -> getFoodY();
+    //int foodX = GameMechsPtr -> getFoodX(); // Get current food position
+    //int foodY = GameMechsPtr -> getFoodY();
     
+    foodPtr->getFoodPos(foodPositions); // Get current food positions
     playerPtr->getPlayerPos(playerPositions); // Get current snake positions
 
     GameMechsPtr -> reset();
@@ -106,9 +110,14 @@ void DrawScreen(void)
         for(j = 0; j < 30; j++)
         {
             // Check position for food 
-            if (i == foodY && j == foodX)
+            for(k=0; k < 5; k++)
             {
-                GameMechsPtr->editBoard(i, j, 'O'); // Add to board
+                foodPositions.getElement(temp, k);
+
+                if (i == temp.y && j == temp.x) // Check all 5 food items
+                {
+                    GameMechsPtr->editBoard(i, j, temp.symbol); // Add to board
+                }
             }
 
             // Check position for snake
@@ -146,21 +155,17 @@ void CleanUp(void)
 {  
     // Deallocate global pointers
     delete GameMechsPtr; 
-    //delete foodPtr;
+    delete foodPtr;
     delete playerPtr; 
   
     MacUILib_uninit();
 }
 
-void genFoodGame()
+void GenerateNewFood()
 {
-    // Generate food item that doesn't overlap player position
-    bool foodgen; 
-    playerPtr->getPlayerPos(playerPositions);
-
-    do
+    int i;
+    for( i=0; i < 5; i++)
     {
-       foodgen = GameMechsPtr -> GenerateFood(playerPositions); 
+        foodPtr->GenerateFood(playerPositions, i);
     }
-    while(foodgen == false); 
 }

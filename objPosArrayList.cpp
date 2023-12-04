@@ -7,6 +7,13 @@ objPosArrayList::objPosArrayList()
     aList = new objPos[sizeArray];
 }
 
+objPosArrayList::objPosArrayList(int capSize)
+{
+    sizeList = 0;
+    sizeArray = capSize;
+    aList = new objPos[sizeArray];
+}
+
 objPosArrayList::~objPosArrayList()
 {
     delete aList;
@@ -67,6 +74,22 @@ void objPosArrayList::removeTail()
     if(sizeList <= 0)
     {
         return;
+    }
+
+    sizeList--;
+}
+
+void objPosArrayList::removeElement(int index)
+{
+    if(sizeList <= 0)
+    {
+        return;
+    }
+
+    // Shuffling Forwards
+    for(int i = index; i < sizeList-1;i++)
+    {
+        aList[i+1].getObjPos(aList[i]);
     }
 
     sizeList--;
