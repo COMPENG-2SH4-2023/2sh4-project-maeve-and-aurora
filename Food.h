@@ -7,6 +7,7 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Player.h" 
 
 using namespace std;
 
@@ -15,26 +16,17 @@ class Food
 {
     
     private:
+        objPosArrayList* foodBucket;
 
-        int x = 14; 
-        int y =5; 
-        int score=0; 
-
-        int foodX;
-        int foodY;
-
-        int *FoodD; 
+        //GameMechs* mainGameMechsRef;
+        //Player* mainPlayerRef;
 
     public:
-        Food();
+        Food(); //GameMechs* thisGMRef, Player* thisPlayerRef
         ~Food(); 
 
-        int getFoodX(); 
-        int getFoodY(); 
-
-        
-        bool GenerateFood(); 
-        
+        void getFoodPos(objPosArrayList &returnPos);        
+        bool GenerateFood(objPosArrayList &playerPosList); 
 };
 
 #endif

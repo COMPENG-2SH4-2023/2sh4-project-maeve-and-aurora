@@ -1,8 +1,9 @@
 #include "Player.h"
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef) //, Food* foodBinRef
 {
     mainGameMechsRef = thisGMRef;
+    //mainFoodBinRef = foodBinRef;
     myDir = STOP;
 
     objPos startPos; // Temp object for starting position
@@ -16,7 +17,6 @@ Player::~Player()
 {
     // Delete heap members
     delete playerPosList;
-    delete mainGameMechsRef;
 }
 
 void Player::getPlayerPos(objPosArrayList &returnPos)

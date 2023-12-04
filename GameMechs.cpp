@@ -2,7 +2,7 @@
 
 GameMechs::GameMechs()
 {
-    input = NULL;
+    input = 0;
     exitFlag = false;
     loseFlag = false;
     boardSizeX = 30;

@@ -4,13 +4,14 @@
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Food.h"
 
 class Player
 {
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // Direction state
 
-        Player(GameMechs* thisGMRef);
+        Player(GameMechs* thisGMRef); //, Food* foodBinRef
         ~Player();
 
         void getPlayerPos(objPosArrayList &returnPos);
@@ -24,8 +25,9 @@ class Player
         objPosArrayList* playerPosList;         
         enum Dir myDir;
 
-        // Need a reference to the Main Game Mechanisms
+        // Reference to the Main Game Mechanisms and Food Items
         GameMechs* mainGameMechsRef;
+        //Food* mainFoodBinRef;
 };
 
 #endif

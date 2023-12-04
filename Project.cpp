@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h" 
 #include "Player.h" 
+#include "Food.h"
 
 using namespace std;
 
@@ -12,8 +13,9 @@ using namespace std;
 objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
 
 //Pointer Declaration
-GameMechs* GameMechsPtr = nullptr; //game mechs pointer! There should be no other global varibles according to the manual
-Player* player = nullptr;
+GameMechs* GameMechsPtr = nullptr; 
+Player* playerPtr = nullptr;
+//Food* foodPtr = nullptr;
 
 void Initialize(void);
 void GetInput(void);
@@ -45,9 +47,9 @@ void Initialize(void)
 
     // Allocate/Initialize global variables
     GameMechsPtr = new GameMechs(); 
-    player = new Player(GameMechsPtr);
-
-    player->getPlayerPos(playerPositions);
+    //foodPtr = new Food();
+    playerPtr = new Player(GameMechsPtr); //, foodPtr
+    playerPtr->getPlayerPos(playerPositions);
 
     // Generate first food item
     genFoodGame(); 
@@ -71,7 +73,7 @@ void GetInput(void)
         }
         else
         {
-            player->updatePlayerDir();
+            playerPtr->updatePlayerDir();
         }
     }
    
@@ -81,7 +83,7 @@ void GetInput(void)
 void RunLogic(void)
 {
     // Move player in current direction, checking for collisions
-    player->movePlayer();
+    playerPtr->movePlayer();
 }
 
 void DrawScreen(void)
@@ -92,7 +94,7 @@ void DrawScreen(void)
     int foodX = GameMechsPtr -> getFoodX(); // Get current food position
     int foodY = GameMechsPtr -> getFoodY();
     
-    player->getPlayerPos(playerPositions); // Get current snake positions
+    playerPtr->getPlayerPos(playerPositions); // Get current snake positions
 
     GameMechs a = GameMechs(foodX, foodY); // Generate new clear board
 
@@ -143,7 +145,8 @@ void CleanUp(void)
 {  
     // Deallocate global pointers
     delete GameMechsPtr; 
-    delete player; 
+    //delete foodPtr;
+    delete playerPtr; 
   
     MacUILib_uninit();
 }
@@ -152,7 +155,7 @@ void genFoodGame()
 {
     // Generate food item that doesn't overlap player position
     bool foodgen; 
-    player->getPlayerPos(playerPositions);
+    playerPtr->getPlayerPos(playerPositions);
 
     do
     {
