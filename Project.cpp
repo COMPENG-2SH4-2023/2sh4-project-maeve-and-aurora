@@ -11,7 +11,7 @@ using namespace std;
 
 //Global Varible Declaration
 objPosArrayList playerPositions; // Seg Faults if created new in DrawScreen()
-GameMechs a = GameMechs(0, 0); // Generate new clear board
+GameMechs a = GameMechs(30, 15); // Generate new clear board of correct size
 
 //Pointer Declaration
 GameMechs* GameMechsPtr = nullptr; 

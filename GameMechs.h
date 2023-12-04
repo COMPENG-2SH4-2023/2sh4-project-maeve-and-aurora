@@ -13,26 +13,18 @@ using namespace std;
 
 class GameMechs
 {
-    // Construct the remaining declaration from the project manual.
 
-    // Only some sample members are included here
-
-    // You will include more data members and member functions to complete your design.
-    
     private:
         char input;
-        bool exitFlag = false;
-        bool loseFlag = false;
-        
-        int boardSizeX = 30;
-        int boardSizeY = 15;
+        bool exitFlag;
+        bool loseFlag;
 
-        int score = 0; 
+        int score; 
 
         int foodX;
         int foodY;
 
-        int **GameMechsD; 
+        int **GameMechsD; //Double pointer which stores the ASCII integers of the characters who make up the game board
 
     public:
         GameMechs();
@@ -41,6 +33,7 @@ class GameMechs
         
         bool getExitFlagStatus();
         void setExitTrue();
+
         bool getLoseFlagStatus();
         void setLoseTrue(); 
 
@@ -48,21 +41,20 @@ class GameMechs
         void setInput(char this_input);
         void clearInput();
 
-        int getBoardSizeX();
-        int getBoardSizeY();
-
         int getScore(); 
         void incScore(int inc); 
 
-        int getGameMechsD(int i, int j); 
-
         int getFoodX(); 
         int getFoodY(); 
-        
-        bool GenerateFood(objPosArrayList &playerPosList); 
 
-        void editBoard(int i, int j, int sym); 
-        void reset(); 
+        int getGameMechsD(int i, int j); //Get the ASCII integer stored at a specific address
+        void allocateMem(int i, int j); //Allocate memory for the GameMechsD pointer
+        
+        bool GenerateFood(objPosArrayList &playerPosList); //Generate food on random space on the board
+
+        void editBoard(int i, int j, int sym); //Place a specific ASCII integer at a specific address
+        void reset();  //Reset the board to blank
+
 };
 
 #endif
