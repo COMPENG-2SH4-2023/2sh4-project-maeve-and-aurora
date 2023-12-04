@@ -108,7 +108,7 @@ void DrawScreen(void)
             // Check position for food 
             if (i == foodY && j == foodX)
             {
-                a.editBoard(i, j, 'O'); // Add to board
+                GameMechsPtr->editBoard(i, j, 'O'); // Add to board
             }
 
             // Check position for snake
@@ -118,11 +118,11 @@ void DrawScreen(void)
 
                 if (i == temp.y && j == temp.x) // Check each part of the snake
                 {
-                    a.editBoard(i, j, temp.symbol); // Add to board
+                    GameMechsPtr->editBoard(i, j, temp.symbol); // Add to board
                 }
             }
 
-            cout << static_cast<char> (a.getGameMechsD(i, j)) ; // Print appropriate symbol
+            cout << static_cast<char> (GameMechsPtr->getGameMechsD(i, j)) ; // Print appropriate symbol
         }
         cout << endl; 
     }
