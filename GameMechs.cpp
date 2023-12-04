@@ -6,21 +6,21 @@ GameMechs::GameMechs()
     exitFlag = false;
     loseFlag = false;
     score = 0; 
-    foodX = 5;
-    foodY = 5;
 
     allocateMem(30, 15); 
-
+    reset(); 
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
+    input = 0;
+    exitFlag = false;
+    loseFlag = false;
+    score = 0;
 
     allocateMem(boardX, boardY); 
     reset(); 
-    
 }
-
 
 GameMechs::~GameMechs() 
 {
@@ -32,31 +32,6 @@ GameMechs::~GameMechs()
 	}
 
 	delete[] GameMechsD; 
-}
-
-bool GameMechs::GenerateFood(objPosArrayList &playerPosList)
-{
-    // Seed random with current time
-    srand(time(NULL));
-
-    // Get coordinates in game board range
-    foodX = rand() % 27 + 1; //might have to play with ending nums
-    foodY = rand() % 12 + 1;
-    
-    // Verify that the current position doesn't overlap the player
-    int i;
-    objPos temp;
-    for( i=0; i < playerPosList.getSize(); i++)
-    {
-        playerPosList.getElement(temp, i);
-
-        if ((foodX == temp.x) && (foodY == temp.y))
-        {
-            return false; 
-        }        
-    }
-
-    return true; 
 }
 
 void GameMechs::reset() 
@@ -101,7 +76,6 @@ void GameMechs::editBoard(int i, int j, int sym)
     // Set new symbol at given location
     GameMechsD[i][j] = sym; 
 }
-
 
 void GameMechs::setExitTrue()
 {
@@ -155,16 +129,4 @@ int GameMechs::getGameMechsD(int i, int j)
 {
     // Return symbol at given location
     return GameMechsD[i][j]; 
-}
-
-int GameMechs::getFoodX()
-{
-    // Return food x coordinate 
-    return foodX; 
-}
-
-int GameMechs::getFoodY()
-{
-    // Return food y coordinate
-    return foodY; 
 }

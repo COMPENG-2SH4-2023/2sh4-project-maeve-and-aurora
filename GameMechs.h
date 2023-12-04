@@ -10,21 +10,15 @@
 
 using namespace std;
 
-
 class GameMechs
 {
-
     private:
         char input;
         bool exitFlag;
         bool loseFlag;
-
         int score; 
 
-        int foodX;
-        int foodY;
-
-        int **GameMechsD; //Double pointer which stores the ASCII integers of the characters who make up the game board
+        int **GameMechsD; // Double pointer which stores the ASCII integers of the characters who make up the game board
 
     public:
         GameMechs();
@@ -44,17 +38,11 @@ class GameMechs
         int getScore(); 
         void incScore(int inc); 
 
-        int getFoodX(); 
-        int getFoodY(); 
+        int getGameMechsD(int i, int j); // Get the ASCII integer stored at a specific address
+        void allocateMem(int i, int j); // Allocate memory for the GameMechsD pointer
 
-        int getGameMechsD(int i, int j); //Get the ASCII integer stored at a specific address
-        void allocateMem(int i, int j); //Allocate memory for the GameMechsD pointer
-        
-        bool GenerateFood(objPosArrayList &playerPosList); //Generate food on random space on the board
-
-        void editBoard(int i, int j, int sym); //Place a specific ASCII integer at a specific address
-        void reset();  //Reset the board to blank
-
+        void editBoard(int i, int j, int sym); // Place a specific ASCII integer at a specific address
+        void reset();  // Reset the board to blank
 };
 
 #endif

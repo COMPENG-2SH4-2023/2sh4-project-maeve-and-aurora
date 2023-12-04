@@ -142,7 +142,6 @@ void Player::movePlayer()
                 { 
                     playerPosList->removeTail(); 
                 } 
-                
                 break;
             default:
                 break;
@@ -165,11 +164,12 @@ int Player::checkFoodConsumption()
     mainFoodBinRef->getFoodPos(*foodPositions);
     playerPosList->getHeadElement(head);
 
+    // Check all 5 food items against head positions
     for(i=0; i < 5; i++)
     {
         foodPositions->getElement(food, i);
 
-        if (head.x == food.x && head.y == food.y) // Check all 5 food items
+        if (head.x == food.x && head.y == food.y) 
         {
             return i; // If hit any food, return index
         }
@@ -183,10 +183,12 @@ void Player::checkSelfCollision(int x, int y)
     int i;
     objPos body;
 
+    // Check all body positions against head
     for( i=1; i < playerPosList->getSize(); i++)
     {
         playerPosList->getElement(body, i);
 
+        // Change end condition if collision
         if (x == body.x && y == body.y)
         {
             mainGameMechsRef->setExitTrue();
